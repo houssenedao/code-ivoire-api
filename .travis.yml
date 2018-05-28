@@ -9,6 +9,13 @@ install:
   - chmod +x coveralls.phar
   - php coveralls.phar --version
 
+before_script:
+  - cp .env.travis .env
+  - php artisan key:generate
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
+
 script:
   - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
