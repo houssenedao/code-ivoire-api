@@ -3,6 +3,9 @@ language: php
 php:
   - nightly
 
+install:
+  - travis_retry composer install --no-interaction --no-suggest
+
 before_script:
   - cp .env.travis .env
   - php artisan key:generate
