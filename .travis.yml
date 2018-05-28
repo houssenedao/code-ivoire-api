@@ -3,21 +3,16 @@ language: php
 php:
   - nightly
 
-install:
-  - travis_retry composer install --no-interaction --no-suggest
-  - wget -c -nc --retry-connrefused --tries=0 https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar -O coveralls.phar
-  - chmod +x coveralls.phar
-  - php coveralls.phar --version
-
 before_script:
   - cp .env.travis .env
   - php artisan key:generate
   - mysql -e 'create database homestead_test;'
   - composer self-update
   - composer install --no-interaction
+  - php artisan migrate
 
 script:
-  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - ./vendor/bin/phpunit
   - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
   - ./vendor/bin/phpcs --standard=PSR2 app/Http/Controllers/API --colors
   - ./vendor/bin/phpcs --standard=PSR2 app/Http/Requests --colors
