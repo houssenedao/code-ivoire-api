@@ -3,6 +3,11 @@ language: php
 php:
   - nightly
 
+branches:
+  only:
+  - master
+  - develop
+
 install:
   - travis_retry composer install --no-interaction --no-suggest
 
