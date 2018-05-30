@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventTagTable extends Migration
+class CreateEventUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateEventTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_tag', function (Blueprint $table) {
-            $table->unsignedInteger('tag_id');
+        Schema::create('event_user', function (Blueprint $table) {
             $table->unsignedInteger('event_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateEventTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_tag');
+        Schema::dropIfExists('event_user');
     }
 }
