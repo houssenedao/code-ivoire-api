@@ -11,14 +11,14 @@ jobs:
     - composer self-update
     - composer install --no-interaction
     - stage: config
-      php:
-      - nightly
+      php: nightly
       script:
         - touch database/database.sqlite
         - cp .env.travis .env
         - php artisan key:generate
         - php artisan migrate
     - stage: code sniffer
+      php: nightly
       script:
         - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Http/Controllers/API --colors
