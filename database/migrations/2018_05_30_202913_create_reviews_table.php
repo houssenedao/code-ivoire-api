@@ -19,6 +19,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('rating');
             $table->string('comment');
             $table->morphs('reviewable');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
