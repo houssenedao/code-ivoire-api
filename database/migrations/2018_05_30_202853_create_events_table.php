@@ -17,11 +17,13 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('category_id');
             $table->string('title');
-            $table->text('description');
-            $table->enum('type', ['Session', 'Workshop', 'Meetup', 'App Review', 'After Work', 'Office Hour']);
-            $table->enum('level', ['Beginner', 'Intermediate', 'Advanced']);
+            $table->text('description')->nullable();
+            $table->enum('type', ['Session', 'Workshop', 'Meetup', 'App Review', 'After Work', 'Office Hour'])->nullable();
+            $table->enum('level', ['Beginner', 'Intermediate', 'Advanced'])->default('Beginner');
             $table->boolean('live');
-            $table->dateTime('start_date');
+            $table->string('live_link')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
