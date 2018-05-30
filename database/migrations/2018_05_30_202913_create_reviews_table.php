@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('rating');
             $table->string('comment');
-            $table->morphs('reviewabol');
+            $table->morphs('reviewabal');
             $table->timestamps();
         });
     }

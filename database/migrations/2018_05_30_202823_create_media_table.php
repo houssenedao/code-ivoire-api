@@ -17,7 +17,7 @@ class CreateMediaTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('path');
-            $table->morphs('mediabol');
+            $table->morphs('mediabal');
             $table->timestamps();
         });
     }
