@@ -3,22 +3,22 @@ language: php
 php:
   - nightly
 
+install:
+  - travis_retry composer install --no-interaction --no-suggest
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+
 jobs:
   include:
-    install:
-    - travis_retry composer install --no-interaction --no-suggest
-    before_script:
-    - composer self-update
-    - composer install --no-interaction
     - stage: config
-      php: nightly
       script:
         - touch database/database.sqlite
         - cp .env.travis .env
         - php artisan key:generate
         - php artisan migrate
     - stage: code sniffer
-      php: nightly
       script:
         - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Http/Controllers/API --colors
@@ -29,8 +29,6 @@ jobs:
         - ./vendor/bin/phpcs --standard=PSR2 app/Models --colors
         - ./vendor/bin/phpcs --standard=PSR2 database/seeds --colors
     - stage: unit tests
-      php:
-      - nightly
       script:
         - ./vendor/bin/phpunit
 
