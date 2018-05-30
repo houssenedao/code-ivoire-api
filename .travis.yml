@@ -2,11 +2,6 @@ language: php
 
 php:
   - nightly
-  
-branches:
-  only:
-  - master
-  - develop
 
 install:
   - travis_retry composer install --no-interaction --no-suggest
@@ -33,9 +28,10 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 branches:
-  only: master
+  only:
+  - master
+  - develop
 
 cache:
   directories:
-  - vendor
   - $HOME/.cache/composer
