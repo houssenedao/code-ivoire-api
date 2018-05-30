@@ -3,27 +3,13 @@ language: php
 php:
   - nightly
 
-branches:
-  only:
-  - master
-  - develop
-
-stages:
-  - compile
-  - build
-  - test
-  - name: deploy
-      if: branch = master
-
-install:
-  - travis_retry composer install --no-interaction --no-suggest
-
-before_script:
-  - composer self-update
-  - composer install --no-interaction
-
 jobs:
   include:
+    install:
+    - travis_retry composer install --no-interaction --no-suggest
+    before_script:
+    - composer self-update
+    - composer install --no-interaction
     - stage: config
       php:
       - nightly
