@@ -24,15 +24,14 @@ before_script:
 
 jobs:
   include:
-    - stage: compile
+    - stage: config
       script:
         - touch database/database.sqlite
         - cp .env.travis .env
         - php artisan key:generate
         - php artisan migrate
-    - stage: build
+    - stage: code sniffer
       script:
-        - ./vendor/bin/phpunit
         - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Http/Controllers/API --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Http/Requests --colors
@@ -41,7 +40,7 @@ jobs:
         - ./vendor/bin/phpcs --standard=PSR2 app/Observers --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Models --colors
         - ./vendor/bin/phpcs --standard=PSR2 database/seeds --colors
-    - stage: test
+    - stage: unit tests
       script:
         - ./vendor/bin/phpunit
 
