@@ -25,6 +25,8 @@ before_script:
 jobs:
   include:
     - stage: config
+      php:
+      - nightly
       script:
         - touch database/database.sqlite
         - cp .env.travis .env
@@ -41,6 +43,8 @@ jobs:
         - ./vendor/bin/phpcs --standard=PSR2 app/Models --colors
         - ./vendor/bin/phpcs --standard=PSR2 database/seeds --colors
     - stage: unit tests
+      php:
+      - nightly
       script:
         - ./vendor/bin/phpunit
 
