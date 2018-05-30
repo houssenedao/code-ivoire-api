@@ -1,0 +1,41 @@
+language: php
+
+php:
+  - nightly
+  
+branches:
+  only:
+  - master
+  - develop
+
+install:
+  - travis_retry composer install --no-interaction --no-suggest
+
+before_script:
+  - cp .env.travis .env
+  - php artisan key:generate
+  - composer self-update
+  - composer install --no-interaction
+  - touch database/database.sqlite
+  - php artisan migrate
+
+script:
+  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpcs --standard=PSR2 app/Events --colors
+  - ./vendor/bin/phpcs --standard=PSR2 app/Http/Controllers/API --colors
+  - ./vendor/bin/phpcs --standard=PSR2 app/Http/Requests --colors
+  - ./vendor/bin/phpcs --standard=PSR2 app/Jobs --colors
+  - ./vendor/bin/phpcs --standard=PSR2 app/Listeners --colors
+  - ./vendor/bin/phpcs --standard=PSR2 app/Observers --colors
+
+after_success:
+  - travis_retry php coveralls.phar -v
+  - bash <(curl -s https://codecov.io/bash)
+
+branches:
+  only: master
+
+cache:
+  directories:
+  - vendor
+  - $HOME/.cache/composer
