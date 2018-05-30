@@ -27,7 +27,6 @@ jobs:
         - ./vendor/bin/phpcs --standard=PSR2 app/Listeners --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Observers --colors
         - ./vendor/bin/phpcs --standard=PSR2 app/Models --colors
-        - ./vendor/bin/phpcs --standard=PSR2 database/seeds --colors
     - stage: unit tests
       script:
         - ./vendor/bin/phpunit
