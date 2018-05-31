@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Auth;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,15 +11,19 @@ use Illuminate\Notifications\Messages\MailMessage;
 class AuthenticatedNotification extends Notification
 {
     use Queueable;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param User $user
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**

@@ -8,6 +8,7 @@ class Event extends Model
 {
     protected $fillable = [];
 
+    protected $hidden = [];
 
     public function category()
     {
