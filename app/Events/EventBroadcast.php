@@ -36,6 +36,6 @@ class EventBroadcast implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('new-event');
+        return new Channel('event');
     }
 }

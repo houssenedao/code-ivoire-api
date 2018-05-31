@@ -49,4 +49,15 @@ class CategoryObserver
     {
         //
     }
+
+    /**
+     * Listen to the \App\Models\Category deleting event.
+     *
+     * @param Category $category
+     * @return void
+     */
+    public function deleted(Category $category)
+    {
+        //
+    }
 }
