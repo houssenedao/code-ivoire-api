@@ -3,7 +3,7 @@
 # Code d'ivoire API
 
 ### Documentation
-All `API` documentation ias available [here](./code-ivoire-api-docs/{{version}}/documentation)
+All `API` documentation ias available [here](./code-ivoire-api-docs/documentation.md)
 
 ### Changelog
 
