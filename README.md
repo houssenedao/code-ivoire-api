@@ -3,7 +3,7 @@
 # Code d'ivoire API
 
 ### Documentation
-All `API` documentation ias available [here](https://github.com/codedivoire/code-ivoire-api-docs/documentation.md)
+All `API` documentation ias available [here](https://github.com/codedivoire/code-ivoire-api-docs/blob/master/documentation.md)
 
 ### Changelog
 
