@@ -8,6 +8,7 @@ use App\Models\Role;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 class User extends Authenticatable
 {
@@ -127,5 +128,24 @@ class User extends Authenticatable
     public function entryEventUnsubscribe(Event $event)
     {
         $this->events()->detach($event);
+    }
+
+    /**
+     * @param $username
+     * @return mixed
+     * @throws OAuthServerException
+     */
+    public function findForPassport($username)
+    {
+        $user = $this->where('email', $username)->first();
+
+        if ($user !== null)
+            if ($user->activated === 0)
+                throw new OAuthServerException('User account is not activated', 6, 'Unauthorized', 401);
+
+            if ($user->deleted_at !== null)
+                throw new OAuthServerException('User account is disabled', 6, 'Unauthorized', 401);
+
+        return $user;
     }
 }
