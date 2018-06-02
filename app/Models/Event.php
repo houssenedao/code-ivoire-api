@@ -17,7 +17,7 @@ class Event extends Model
     protected $hidden = [];
 
     /**
-     * Category Event
+     * Event category
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -27,7 +27,7 @@ class Event extends Model
     }
 
     /**
-     * Reviews Event
+     * Event reviews
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -37,6 +37,8 @@ class Event extends Model
     }
 
     /**
+     * Event media
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function medias()
@@ -45,6 +47,8 @@ class Event extends Model
     }
 
     /**
+     * Event tags
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
@@ -59,7 +63,7 @@ class Event extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(Event::class, 'event_tag');
+        return $this->belongsToMany(Event::class, 'event_user');
     }
 
     /**
@@ -67,9 +71,9 @@ class Event extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function speakers()
+    public function eventSpeakers()
     {
-        return $this->belongsToMany(Event::class, 'event_tag')->wherePivot('it_is', 'SPEAKER');
+        return $this->users()->wherePivot('it_is', 'SPEAKER');
     }
 
     /**
@@ -77,8 +81,8 @@ class Event extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function entries()
+    public function eventEntries()
     {
-        return $this->belongsToMany(Event::class, 'event_tag')->wherePivot('it_is', 'ENTRY');
+        return $this->users()->wherePivot('it_is', 'ENTRY');
     }
 }
