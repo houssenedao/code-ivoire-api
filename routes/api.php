@@ -33,6 +33,7 @@ Route::apiResource('tags', 'API\TagController');
 Route::apiResource('me', 'API\Me\MeController');
 Route::apiResource('me.reviews', 'API\Me\MeReviewController');
 Route::apiResource('me.events', 'API\Me\MeEventController');
+Route::apiResource('me.roles', 'API\Me\MeRoleController');
 /**
  * Roles API Routes
  */
