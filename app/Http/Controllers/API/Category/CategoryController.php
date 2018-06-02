@@ -79,12 +79,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->delete())
+        if ($category->delete()) {
             return response()->json([
                 'data' => [
                     'action' => 'delete category',
                     'message' => 'Your content is deleted.'
                 ]
             ], 204);
+        }
     }
 }

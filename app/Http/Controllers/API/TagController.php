@@ -77,12 +77,13 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        if ($tag->delete())
+        if ($tag->delete()) {
             return response()->json([
                 'data' => [
                     'action' => 'delete category',
                     'message' => 'Your content is deleted.'
                 ]
             ], 204);
+        }
     }
 }
