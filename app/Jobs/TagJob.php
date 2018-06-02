@@ -18,10 +18,12 @@ class TagJob implements ShouldQueue
      * @var
      */
     protected $action;
+
     /**
      * @var Tag
      */
     protected $tag;
+
     /**
      * @var null
      */
@@ -63,28 +65,32 @@ class TagJob implements ShouldQueue
     /**
      * Store Category
      *
-     * @return array|null
+     * @return void
      */
     private function store()
     {
         if ($this->request !== null) {
-            $create = Category::create($this->request);
+            $create = Tag::create($this->request);
 
-            if ($create) return event(new TagBroadcast($create, 'STORE'));
+            if ($create) {
+                event(new TagBroadcast($create, 'STORE'));
+            }
         }
     }
 
     /**
      * Update Category
      *
-     * @return array|null
+     * @return void
      */
     private function update()
     {
         if ($this->request !== null) {
             $update = $this->tag->fill($this->request);
 
-            if ($update) return event(new TagBroadcast($update, 'UPDATE'));
+            if ($update) {
+                event(new TagBroadcast($update, 'UPDATE'));
+            }
         }
     }
 }

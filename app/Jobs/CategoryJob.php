@@ -66,28 +66,32 @@ class CategoryJob implements ShouldQueue
     /**
      * Store Category
      *
-     * @return array|null
+     * @return void
      */
     private function store()
     {
         if ($this->request !== null) {
             $create = Category::create($this->request);
 
-            if ($create) return event(new CategoryBroadcast($create, 'STORE'));
+            if ($create) {
+                event(new CategoryBroadcast($create, 'STORE'));
+            }
         }
     }
 
     /**
      * Update Category
      *
-     * @return array|null
+     * @return void
      */
     private function update()
     {
         if ($this->request !== null) {
             $update = $this->category->fill($this->request);
 
-            if ($update) return event(new CategoryBroadcast($update, 'UPDATE'));
+            if ($update) {
+                event(new CategoryBroadcast($update, 'UPDATE'));
+            }
         }
     }
 }
