@@ -2,8 +2,11 @@
 
 # Code d'ivoire API
 
-### Auth
+### Documentation
+All `API` documentation ias available [here](.documentation/doc.md)
 
-### Endpoints
+### Changelog
+
+### Contributing
 
 ### Licence

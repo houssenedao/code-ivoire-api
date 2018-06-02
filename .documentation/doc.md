@@ -2,6 +2,25 @@
 Code D'Ivoire Rest Full API documentation
 
 ### Install
+Dans un prémier temps cloner ce repertoire
+```php
+$ git clone https://github.com/codedivoire/code-ivoire-api.git
+```
+
+Installer les dépendance `PHP`.
+ ```php
+$ composer install
+```
+
+Configurer votre fichier d'environnement.
+```php
+$ cp .env.example .env
+```
+
+Générer la clé de votre application.
+```php
+$ php artisan key:generate
+```
 
 ### Tools
 
