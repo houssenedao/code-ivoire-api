@@ -17,7 +17,10 @@ class CreateEventUserTable extends Migration
             $table->unsignedInteger('event_id');
             $table->unsignedInteger('user_id');
             $table->enum('it_is', ['ENTRY', 'SPEAKER']);
-            $table->timestamps();
+
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->primary(['event_id', 'user_id']);
         });
     }
 

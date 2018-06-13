@@ -1,10 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Event;
-use App\Models\Review;
-use App\Models\Role;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,15 +40,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+
     public function asRole()
     {
         //
     }
 
+
     public function assignRole()
     {
         //
     }
+
 
     public function detachRole()
     {

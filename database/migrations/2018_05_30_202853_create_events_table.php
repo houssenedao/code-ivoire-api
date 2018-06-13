@@ -14,7 +14,7 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->unsignedInteger('category_id');
             $table->string('title');
             $table->text('description')->nullable();
@@ -25,6 +25,8 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

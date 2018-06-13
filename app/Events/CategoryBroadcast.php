@@ -45,7 +45,7 @@ class CategoryBroadcast implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('categories');
+        return new PrivateChannel('categories.'. $this->type);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class RolesTableSeeder extends Seeder
 {
@@ -33,5 +35,13 @@ class RolesTableSeeder extends Seeder
                 'label' => ''
             ],
         ];
+
+        foreach ($roles as $role) {
+            Role::create([
+               'id' => Str::uuid(),
+               'name' => $role['name'],
+               'label' => $role['label']
+            ]);
+        }
     }
 }

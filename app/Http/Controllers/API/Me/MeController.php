@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Me;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,9 +10,10 @@ class MeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -21,8 +21,8 @@ class MeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -32,10 +32,10 @@ class MeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
         //
     }
@@ -43,11 +43,10 @@ class MeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         //
     }
@@ -55,10 +54,10 @@ class MeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
         //
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Me;
 
 use App\Models\Event;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,10 +11,10 @@ class MeEventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function index(User $user)
+    public function index(Request $request)
     {
         //
     }
@@ -23,11 +22,10 @@ class MeEventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
         //
     }
@@ -35,11 +33,10 @@ class MeEventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Event $event
+     * @return void
      */
-    public function show(User $user, Event $event)
+    public function show(Event $event)
     {
         //
     }
@@ -47,12 +44,11 @@ class MeEventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param  \App\Models\Event $event
+     * @return void
      */
-    public function update(Request $request, User $user, Event $event)
+    public function update(Request $request, Event $event)
     {
         //
     }
@@ -60,11 +56,10 @@ class MeEventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Event $event
+     * @return void
      */
-    public function destroy(User $user, Event $event)
+    public function destroy(Event $event)
     {
         //
     }
