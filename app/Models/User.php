@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use League\OAuth2\Server\Exception\OAuthServerException;
+use Illuminate\Support\Facades\Storage;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     /**
      * @var string
@@ -22,8 +24,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'phone', 'activated', 'activated_token', 'avatar',
     ];
+
+    /**
+     * Appends content
+     *
+     * @var array
+     */
+    protected $appends = ['avatar_url'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,7 +40,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'activated_token'
     ];
 
     /**
@@ -137,21 +146,11 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $username
+     * Avatar
      * @return mixed
-     * @throws OAuthServerException
      */
-    public function findForPassport($username)
+    public function getAvatarUrlAttribute()
     {
-        $user = $this->where('email', $username)->first();
-
-        if ($user !== null)
-            if ($user->activated === 0)
-                throw new OAuthServerException('User account is not activated', 6, 'Unauthorized', 401);
-
-            if ($user->deleted_at !== null)
-                throw new OAuthServerException('User account is disabled', 6, 'Unauthorized', 401);
-
-        return $user;
+        return Storage::url('public/avatars/'.$this->id.'/'.$this->avatar);
     }
 }
