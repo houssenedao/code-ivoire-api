@@ -12,7 +12,7 @@ install:
   - travis_retry composer install --no-interaction --no-suggest
 
 before_script:
-  - cp .env.travis .env
+  - cp .env.testing .env
   - composer self-update
   - composer install --no-interaction
   - touch database/database.sqlite
