@@ -21,8 +21,6 @@ class CreateReviewsTable extends Migration
             $table->morphs('reviewable');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

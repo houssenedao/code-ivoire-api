@@ -9,8 +9,12 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 
 class User extends Authenticatable
 {
-
     use HasApiTokens, Notifiable;
+
+    /**
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -73,7 +77,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function myOpinion()
+    public function myOpinions()
     {
         return $this->hasMany(Review::class);
     }
@@ -112,10 +116,11 @@ class User extends Authenticatable
      * User subscribe event
      *
      * @param Event $event
+     * @return void
      */
     public function entryEventSubscribe(Event $event)
     {
-        $this->events()->attach($event, [
+        return $this->events()->attach($event, [
             'it_is' => 'ENTRY'
         ]);
     }
@@ -124,10 +129,11 @@ class User extends Authenticatable
      * User unsubscribe event
      *
      * @param Event $event
+     * @return int
      */
     public function entryEventUnsubscribe(Event $event)
     {
-        $this->events()->detach($event);
+        return $this->events()->detach($event);
     }
 
     /**

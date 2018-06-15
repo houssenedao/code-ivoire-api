@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\Tag\CreateTagRequest;
+use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Http\Resources\TagResource;
-use App\Jobs\TagJob;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TagController extends Controller
@@ -13,59 +13,53 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return response()->json(TagResource::collection(Tag::paginate()), 200);
+        return TagResource::collection(Tag::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateTagRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTagRequest $request)
     {
-        $this->dispatch(new TagJob('STORE', null, $request->all()));
+        $create = Tag::create($request->all());
 
-        return response()->json([
-            'data' => [
-                'action' => 'store new category',
-                'message' => 'Please wait this action is running in background job.'
-            ]
-        ], 200);
+        if ($create) {
+            return response()->json($create, 201);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Tag $tag
+     * @return TagResource
      */
     public function show(Tag $tag)
     {
-        return response()->json(new TagResource($tag), 200);
+        return new TagResource($tag);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
+     * @param UpdateTagRequest $request
+     * @param  \App\Models\Tag $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        $this->dispatch(new TagJob('UPDATE', $tag, $request->all()));
+        $update = $tag->fill($request->all());
 
-        return response()->json([
-            'data' => [
-                'action' => 'update category',
-                'message' => 'Please wait this action is running in background job.'
-            ]
-        ], 200);
+        if ($update) {
+            return response()->json(null, 204);
+        }
     }
 
     /**
@@ -78,12 +72,7 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         if ($tag->delete()) {
-            return response()->json([
-                'data' => [
-                    'action' => 'delete category',
-                    'message' => 'Your content is deleted.'
-                ]
-            ], 204);
+            return response()->json(null, 200);
         }
     }
 }

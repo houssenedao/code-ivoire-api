@@ -15,13 +15,11 @@ class CreateMediaTable extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('user_id');
             $table->string('path');
             $table->morphs('mediable');
             $table->string('type')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

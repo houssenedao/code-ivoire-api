@@ -2,15 +2,16 @@
 
 namespace App\Notifications\Auth;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AuthenticatedNotification extends Notification
+class AuthenticatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
     /**
      * @var User
      */

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     /**
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * @var array
      */
     protected $fillable = [

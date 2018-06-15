@@ -37,6 +37,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
+        $this->mapDocRoutes();
+
+        $this->mapManageRoutes();
+
         $this->mapWebRoutes();
 
         //
@@ -53,7 +57,37 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+             ->group(base_path('routes/frontend/web.php'));
+    }
+
+    /**
+     * Define the "documentation" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapDocRoutes()
+    {
+        Route::middleware('web')
+            ->domain('documentation.' . config('app.url'))
+            ->namespace($this->namespace)
+            ->group(base_path('routes/frontend/doc.php'));
+    }
+
+    /**
+     * Define the "documentation" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapManageRoutes()
+    {
+        Route::middleware('web')
+            ->domain('manage.' . config('app.url'))
+            ->namespace($this->namespace)
+            ->group(base_path('routes/manage.php'));
     }
 
     /**
@@ -65,9 +99,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        Route::domain('api.' . config('app.url'))
+            ->prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/v1.php'));
     }
 }

@@ -25,8 +25,6 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

@@ -11,54 +11,49 @@ class MeController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return void
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function show(Request $request)
-    {
-        //
+        return response()->json($request->user());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
     {
-        //
+        $update = $request->user()->update($request->all());
+
+        if ($update) {
+            return response()->json(null, 200);
+        }
+    }
+
+    /**
+     * My opinions
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function opinion(Request $request)
+    {
+        return $request->user()->myOpinions()->get();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request)
     {
-        //
+        if ($request->user()->delete()) {
+            return response()->json(null, 200);
+        }
     }
 }
