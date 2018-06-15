@@ -57,7 +57,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/frontend/web.php'));
+             ->group(base_path('routes/core/web.php'));
     }
 
     /**
@@ -70,9 +70,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapDocRoutes()
     {
         Route::middleware('web')
-            ->domain('documentation.' . config('app.url'))
+            ->prefix('documentation')
             ->namespace($this->namespace)
-            ->group(base_path('routes/frontend/doc.php'));
+            ->group(base_path('routes/core/doc.php'));
     }
 
     /**
@@ -85,9 +85,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapManageRoutes()
     {
         Route::middleware('web')
-            ->domain('manage.' . config('app.url'))
+            ->prefix('manage')
             ->namespace($this->namespace)
-            ->group(base_path('routes/manage.php'));
+            ->group(base_path('routes/core/manage.php'));
     }
 
     /**
