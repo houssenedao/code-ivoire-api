@@ -1,8 +1,29 @@
 <?php
 /**
+ * API Auth
+ */
+Route::group(['prefix' => 'auth'], function () {
+    /**
+     * Login
+     */
+    Route::post('login', 'AuthController@login');
+    /**
+     * Register
+     */
+    Route::post('register', 'AuthController@signup');
+    /**
+     * Activate account
+     */
+    Route::get('activate/{token}', 'AuthController@signupActivate')->name('activate');
+});
+/**
  * Protected route
  */
 Route::middleware('auth:api', function () {
+    /**
+     * User logout
+     */
+    Route::get('logout', 'AuthController@logout');
     /**
      * Categories API Routes
      */
