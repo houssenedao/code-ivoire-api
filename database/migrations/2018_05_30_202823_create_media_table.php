@@ -18,6 +18,7 @@ class CreateMediaTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->string('path');
             $table->morphs('mediable');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

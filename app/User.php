@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Passport\HasApiTokens;
 
+
 class User extends Authenticatable
 {
 
