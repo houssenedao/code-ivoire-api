@@ -6,15 +6,15 @@ Route::group(['prefix' => 'auth'], function () {
     /**
      * Login
      */
-    Route::post('login', 'AuthController@login');
+    Route::post('login', 'API\AuthController@login');
     /**
      * Register
      */
-    Route::post('register', 'AuthController@signup');
+    Route::post('register', 'API\AuthController@signup');
     /**
      * Activate account
      */
-    Route::get('activate/{token}', 'AuthController@signupActivate')->name('activate');
+    Route::get('activate/{token}', 'API\AuthController@signupActivate')->name('activate');
 });
 /**
  * Protected route
@@ -23,7 +23,7 @@ Route::middleware('auth:api', function () {
     /**
      * User logout
      */
-    Route::get('logout', 'AuthController@logout');
+    Route::get('logout', 'API\AuthController@logout');
     /**
      * Categories API Routes
      */

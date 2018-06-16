@@ -70,7 +70,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapDocRoutes()
     {
         Route::middleware('web')
-            ->prefix('documentation')
+            ->prefix('docs')
             ->namespace($this->namespace)
             ->group(base_path('routes/core/doc.php'));
     }
