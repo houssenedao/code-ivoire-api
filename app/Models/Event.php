@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     /**
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * @var array
      */
     protected $fillable = [];

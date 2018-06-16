@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Event;
 
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -12,12 +13,12 @@ class EventTagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Event $event
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Event $event)
     {
-        //
+        return TagResource::collection($event->tags()->get());
     }
 
     /**
@@ -29,32 +30,13 @@ class EventTagController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        //
-    }
+        $tag = Tag::whereName($request->get('name'))->pluck('id')->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event, Tag $tag)
-    {
-        //
-    }
+        $attach = $event->tags()->attach($tag);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Event $event, Tag $tag)
-    {
-        //
+        if ($attach) {
+            return response()->json($attach, 201);
+        }
     }
 
     /**
@@ -66,6 +48,10 @@ class EventTagController extends Controller
      */
     public function destroy(Event $event, Tag $tag)
     {
-        //
+        $detach = $event->tags()->detach($tag->id);
+
+        if ($detach) {
+            return response()->json($detach, 201);
+        }
     }
 }

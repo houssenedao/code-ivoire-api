@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Category;
 
-use App\Models\Event;
+use App\Http\Resources\EventResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,12 +12,12 @@ class CategoryEventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category $category
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Category $category)
     {
-        //
+        return EventResource::collection($category->events()->paginate());
     }
 
     /**
@@ -29,43 +29,10 @@ class CategoryEventController extends Controller
      */
     public function store(Request $request, Category $category)
     {
-        //
-    }
+        $create = $category->events()->create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category, Event $event)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category, Event $event)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category, Event $event)
-    {
-        //
+        if ($create) {
+            return response()->json($create, 201);
+        }
     }
 }

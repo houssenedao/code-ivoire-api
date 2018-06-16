@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Event;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -12,12 +13,12 @@ class EventReviewController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Event $event
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Event $event)
     {
-        //
+        return ReviewResource::collection($event->reviews()->paginate());
     }
 
     /**
@@ -29,43 +30,27 @@ class EventReviewController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        //
-    }
+        $create = $event->reviews()->create(
+            array_merge($request->all(), ['user_id' => $request->user()])
+        );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event, Review $review)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Event $event, Review $review)
-    {
-        //
+        if ($create) {
+            return response()->json($create, 201);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Event  $event
-     * @param  \App\Models\Review  $review
+     * @param  \App\Models\Event $event
+     * @param  \App\Models\Review $review
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Event $event, Review $review)
     {
-        //
+        if ($review->delete()) {
+            return response()->json(null, 200);
+        }
     }
 }

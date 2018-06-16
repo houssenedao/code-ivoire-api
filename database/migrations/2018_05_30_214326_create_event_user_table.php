@@ -17,7 +17,7 @@ class CreateEventUserTable extends Migration
             $table->unsignedInteger('event_id');
             $table->unsignedInteger('user_id');
             $table->enum('it_is', ['ENTRY', 'SPEAKER']);
-            $table->timestamps();
+            $table->primary(['event_id', 'user_id']);
         });
     }
 

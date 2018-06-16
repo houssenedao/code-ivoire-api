@@ -19,12 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Category::observe(CategoryObserver::class);
-        Event::observe(EventObserver::class);
-        Permission::observe(PermissionObserver::class);
-        Review::observe(ReviewObserver::class);
-        Role::observe(RoleObserver::class);
-        Tag::observe(TagObserver::class);
+        //
     }
 
     /**
