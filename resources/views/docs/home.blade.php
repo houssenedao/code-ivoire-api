@@ -7,10 +7,10 @@
 
     </nav>
     <main>
-        <section class="sidebar">
+        <aside class="sidebar">
             <small><a href="#" id="doc-expand" style="font-size: 11px; color: #B8B8B8;">Expand All</a></small>
             {!! $index !!}
-        </section>
+        </aside>
 
         <article>
             {!! $content !!}
