@@ -32,7 +32,6 @@ Route::apiResource('categories', 'CategoryController');
 Route::apiResource('events', 'EventController');
 Route::apiResource('reviews', 'ReviewController');
 Route::apiResource('tags', 'TagController');
-=======
 /**
  * Users API Routes
  */
