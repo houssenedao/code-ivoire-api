@@ -4109,7 +4109,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	var hasCompare, subWindow,
 		doc = node ? node.ownerDocument || node : preferredDoc;
 
-	// Return early if docs is invalid or already selected
+	// Return early if doc is invalid or already selected
 	if ( doc === document || doc.nodeType !== 9 || !doc.documentElement ) {
 		return document;
 	}
@@ -5925,7 +5925,7 @@ jQuery.fn.extend( {
 			this,
 
 			// If this is a positional/relative selector, check membership in the returned set
-			// so $("p:first").is("p:last") won't return true for a docs with two "p".
+			// so $("p:first").is("p:last") won't return true for a doc with two "p".
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
 				selector || [],
@@ -13899,9 +13899,8 @@ var app = new Vue({
 
 /***/ }),
 /* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 
 window._ = __webpack_require__(14);
 window.Popper = __webpack_require__(3).default;
@@ -14550,7 +14549,7 @@ if (token) {
   }
 
   /**
-   * A specialized version of `_.partials` for arrays without support for
+   * A specialized version of `_.includes` for arrays without support for
    * specifying an index to search from.
    *
    * @private
@@ -15576,7 +15575,7 @@ if (token) {
      * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
      * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
      * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
-     * `hasIn`, `head`, `identity`, `partials`, `indexOf`, `inRange`, `invoke`,
+     * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
      * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
      * `isBoolean`, `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`,
      * `isEqualWith`, `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`,
@@ -20490,7 +20489,7 @@ if (token) {
     /**
      * This function is like
      * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
-     * except that it partials inherited enumerable properties.
+     * except that it includes inherited enumerable properties.
      *
      * @private
      * @param {Object} object The object to query.
@@ -23379,16 +23378,16 @@ if (token) {
      * @returns {boolean} Returns `true` if `value` is found, else `false`.
      * @example
      *
-     * _.partials([1, 2, 3], 1);
+     * _.includes([1, 2, 3], 1);
      * // => true
      *
-     * _.partials([1, 2, 3], 1, 2);
+     * _.includes([1, 2, 3], 1, 2);
      * // => false
      *
-     * _.partials({ 'a': 1, 'b': 2 }, 1);
+     * _.includes({ 'a': 1, 'b': 2 }, 1);
      * // => true
      *
-     * _.partials('abcd', 'bc');
+     * _.includes('abcd', 'bc');
      * // => true
      */
     function includes(collection, value, fromIndex, guard) {
@@ -23612,7 +23611,7 @@ if (token) {
      * `_.reduce`, `_.reduceRight`, and `_.transform`.
      *
      * The guarded methods are:
-     * `assign`, `defaults`, `defaultsDeep`, `partials`, `merge`, `orderBy`,
+     * `assign`, `defaults`, `defaultsDeep`, `includes`, `merge`, `orderBy`,
      * and `sortBy`
      *
      * @static
@@ -29230,7 +29229,7 @@ if (token) {
      * @example
      *
      * var view = {
-     *   'label': 'content',
+     *   'label': 'docs',
      *   'click': function() {
      *     console.log('clicked ' + this.label);
      *   }
@@ -29238,7 +29237,7 @@ if (token) {
      *
      * _.bindAll(view, ['click']);
      * jQuery(element).on('click', view.click);
-     * // => Logs 'clicked content' when clicked.
+     * // => Logs 'clicked docs' when clicked.
      */
     var bindAll = flatRest(function(object, methodNames) {
       arrayEach(methodNames, function(key) {
@@ -35009,7 +35008,7 @@ module.exports = function(module) {
     var maxMajor = 4;
 
     if (version[0] < ltMajor && version[1] < minMinor || version[0] === minMajor && version[1] === minMinor && version[2] < minPatch || version[0] >= maxMajor) {
-      throw new Error('Bootstrap\'s JavaScript requires at least jQuery api.9.1 but less than v4.0.0');
+      throw new Error('Bootstrap\'s JavaScript requires at least jQuery v1.9.1 but less than v4.0.0');
     }
   })($);
 
