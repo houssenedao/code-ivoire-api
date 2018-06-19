@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Core\Auth;
 
-use App\Jobs\Auth\RegisteredNotificationJob;
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Notifications\Auth\RegisteredNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +43,16 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('core.auth.register');
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -61,7 +71,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
@@ -81,7 +91,7 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        $this->dispatch(new RegisteredNotificationJob($user));
+        $user->notify(new RegisteredNotification($user));
     }
 
 }

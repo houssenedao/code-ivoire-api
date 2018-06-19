@@ -2,33 +2,38 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Notifications\SignupActivate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Laravolt\Avatar\Avatar;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ApiLoginRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ApiRegisterRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Auth\ActivatedNotification;
+use App\Notifications\Auth\RegisteredNotification;
+use App\Notifications\Auth\AuthenticatedNotification;
 
 class AuthController extends Controller
 {
     /**
+     * AuthController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('logout');
+    }
+
+    /**
      * Create user
      *
-     * @param Request $request
+     * @param ApiRegisterRequest $request
      * @return \Illuminate\Http\JsonResponse [string] message
      */
-    public function signup(Request $request)
+    public function register(ApiRegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string|unique:users',
-            'email' => 'required|string|email|unique:users',
-            'phone' => 'required|string|unique:users',
-            'password' => 'required|string|confirmed'
-        ]);
-
         $user = new User([
             'name' => $request->name,
             'username' => $request->username,
@@ -38,13 +43,15 @@ class AuthController extends Controller
             'activated_token' => str_random(60)
         ]);
 
-        $user->save();
+        // Save user
+        if ($user->save()) {
+            Notification::send($user, new RegisteredNotification($user));
+        }
 
         $avatar = (new \Laravolt\Avatar\Avatar)->create($user->name)->getImageObject()->encode('png');
         Storage::put('public/avatars/'.$user->id.'/avatar.png', (string) $avatar);
 
-        $user->notify(new SignupActivate($user));
-
+        // Return response
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
@@ -53,17 +60,11 @@ class AuthController extends Controller
     /**
      * Login user and create token
      *
-     * @param Request $request
+     * @param ApiLoginRequest $request
      * @return \Illuminate\Http\JsonResponse [string] access_token
      */
-    public function login(Request $request)
+    public function login(ApiLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
-
         $credentials = request(['email', 'password']);
         $credentials['activated'] = 1;
         $credentials['deleted_at'] = null;
@@ -78,10 +79,13 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
 
-        if ($request->remember_me)
+        if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addWeeks(1);
+        }
 
-        $token->save();
+        if ($token->save()) {
+            Notification::send($user, new AuthenticatedNotification($user));
+        }
 
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -108,21 +112,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse [json] user object
-     */
-    public function user(Request $request)
-    {
-        return response()->json($request->user());
-    }
-
-    /**
      * @param $token
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signupActivate($token)
+    public function activate($token)
     {
         $user = User::where('activated_token', $token)->first();
 
@@ -134,7 +127,10 @@ class AuthController extends Controller
 
         $user->activated = true;
         $user->activated_token = '';
-        $user->save();
+
+        if ($user->save()) {
+            Notification::send($user, new ActivatedNotification($user));
+        }
 
         return $user;
     }

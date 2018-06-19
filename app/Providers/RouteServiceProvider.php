@@ -35,11 +35,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
-        $this->mapDocRoutes();
-
-        $this->mapManageRoutes();
+        $this->mapApiV1Routes();
 
         $this->mapWebRoutes();
 
@@ -57,37 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/core/web.php'));
-    }
-
-    /**
-     * Define the "documentation" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapDocRoutes()
-    {
-        Route::middleware('web')
-            ->prefix('docs')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/core/doc.php'));
-    }
-
-    /**
-     * Define the "documentation" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapManageRoutes()
-    {
-        Route::middleware('web')
-            ->prefix('manage')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/core/manage.php'));
+             ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -97,7 +63,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiV1Routes()
     {
         Route::domain('api.' . config('app.url'))
             ->prefix('v1')
