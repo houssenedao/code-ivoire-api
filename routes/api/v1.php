@@ -4,22 +4,18 @@
  */
 Route::group(['prefix' => 'auth'], function () {
     /**
-     * Login
-     */
+     * Login */
     Route::post('login', 'API\AuthController@login');
     /**
-     * Register
-     */
+     * Register */
     Route::post('register', 'API\AuthController@register');
     /**
-     * Activate account
-     */
+     * Activate account */
     Route::get('activate/{token}', 'API\AuthController@activate')->name('activate');
+    /**
+     * User logout */
+    Route::post('logout', 'API\AuthController@logout');
 });
-/**
- * User logout
- */
-Route::get('logout', 'API\AuthController@logout');
 /**
  * Categories API Routes
  */
